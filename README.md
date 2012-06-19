@@ -21,54 +21,54 @@ Cloud base music portal
        -  ~$ gradlew cleanEclipse eclipse: to generate Eclipse project files
        -  ~$ gradlew cleanIdea idea: to generate IntelliJ project files
 
- - Directory layout
-            /
-            +-- gradlew       // gradle script
-            +-- build.gradle  // gradle build file
-            +-- src
-                |
-                +-- main
-                |   |
-                |   +-- groovy
-                |   +-- java
-                |   +-- webapp
-                |       |
-                |       +-- index.gtpl
-                |       +-- css
-                |       +-- images
-                |       +-- js
-                |       +-- WEB-INF
-                |           |
-                |           +-- appengine-web.xml
-                |           +-- web.xml
-                |           +-- plugins.groovy      // if you use plugins
-                |           +-- routes.groovy       // if you use the URL mapping system
-                |           +-- classes
-                |           |
-                |           +-- groovy
-                |           |    |
-                |           |    +-- controller.groovy    // groovy controller classes
-                |           |
-                |           +-- pages
-                |           |    |
-                |           |    +-- view.gtpl           // pages which contains web layout
-                |           |
-                |           +-- includes
-                |           |    |
-                |           |    +-- footer.gtpl         // templates
-                |           |
-                |           +-- lib                      // library
-                |               |
-                |               +-- appengine-api-1.0-sdk-x.y.z.jar
-                |               +-- appengine-api-labs-x.y.z.jar
-                |               +-- gaelyk-x.y.z.jar
-                |               +-- groovy-all-x.y.z.jar
-                |
-                +-- test
-                    |
-                    +-- groovy
-                    +-- java
-
+ - Directory layout <br>
+            /<br>
+            +-- gradlew       // gradle script<br>
+            +-- build.gradle  // gradle build file<br>
+            +-- src<br>
+                |<br>
+                +-- main<br>
+                |   |<br>
+                |   +-- groovy<br>
+                |   +-- java<br>
+                |   +-- webapp<br>
+                |       |<br>
+                |       +-- index.gtpl<br>
+                |       +-- css<br>
+                |       +-- images<br>
+                |       +-- js<br>
+                |       +-- WEB-INF<br>
+                |           |<br>
+                |           +-- appengine-web.xml<br>
+                |           +-- web.xml<br>
+                |           +-- plugins.groovy      // if you use plugins<br>
+                |           +-- routes.groovy       // if you use the URL mapping system<br>
+                |           +-- classes<br>
+                |           |<br>
+                |           +-- groovy<br>
+                |           |    |<br>
+                |           |    +-- controller.groovy    // groovy controller classes<br>
+                |           |<br>
+                |           +-- pages<br>
+                |           |    |<br>
+                |           |    +-- view.gtpl           // pages which contains web layout<br>
+                |           |<br>
+                |           +-- includes<br>
+                |           |    |<br>
+                |           |    +-- footer.gtpl         // templates<br>
+                |           |<br>
+                |           +-- lib                      // library<br>
+                |               |<br>
+                |               +-- appengine-api-1.0-sdk-x.y.z.jar<br>
+                |               +-- appengine-api-labs-x.y.z.jar<br>
+                |               +-- gaelyk-x.y.z.jar<br>
+                |               +-- groovy-all-x.y.z.jar<br>
+                |<br>
+                +-- test<br>
+                    |<br>
+                    +-- groovy<br>
+                    +-- java<br>
+<br>
 ========================================================================================================================
 License: GPL v3  (Open Source)
 
