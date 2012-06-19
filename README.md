@@ -23,6 +23,7 @@ Cloud base music portal
 
  - Directory layout
             /
+            +-- gradlew       // gradle script
             +-- build.gradle  // gradle build file
             +-- src
                 |
