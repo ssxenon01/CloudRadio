@@ -6,20 +6,20 @@ Cloud base music portal
 
  - Install gradle buildtool from  http://www.gradle.org/downloads
  - You will find the following Gradle tasks handy:
-         ~$ gradlew tasks: to list all the possible tasks which are available
-         ~$ gradlew classes: to compile your Java/Groovy sources in the folders src/main/java and src/main/groovy and have them placed in WEB-INF/classes
-         ~$ gradlew test: to compile and run your tests from src/test/java and src/test/groovy
-         ~$ gradlew gaeFunctionalTest: to run the Spock and Geb-powered functional tests from src/functionalTest/groovy
-         ~$ gradlew gaeRun: to run your application locally
-         ~$ gradlew gaeStop: to stop your locally running application
-         ~$ gradlew gaeUpload: to upload your application to production
-         ~$ gradlew gaelykInstallPlugin: to install a plugin provided by the command line property (-P) plugin
-         ~$ gradlew gaelykUninstallPlugin: to uninstall a plugin provided by the command line property (-P) plugin
-         ~$ gradlew gaelykListInstalledPlugins: to show the installed plugins
-         ~$ gradlew gaelykCreateController<ControllerName>: to create a Groovlet with the specified name
-         ~$ gradlew gaelykCreateView<ViewName>: to create a Groovy template with the specified name
-         ~$ gradlew cleanEclipse eclipse: to generate Eclipse project files
-         ~$ gradlew cleanIdea idea: to generate IntelliJ project files
+       -  ~$ gradlew tasks: to list all the possible tasks which are available
+       -  ~$ gradlew classes: to compile your Java/Groovy sources in the folders src/main/java and src/main/groovy and have them placed in WEB-INF/classes
+       -  ~$ gradlew test: to compile and run your tests from src/test/java and src/test/groovy
+       -  ~$ gradlew gaeFunctionalTest: to run the Spock and Geb-powered functional tests from src/functionalTest/groovy
+       -  ~$ gradlew gaeRun: to run your application locally
+       -  ~$ gradlew gaeStop: to stop your locally running application
+       -  ~$ gradlew gaeUpload: to upload your application to production
+       -  ~$ gradlew gaelykInstallPlugin: to install a plugin provided by the command line property (-P) plugin
+       -  ~$ gradlew gaelykUninstallPlugin: to uninstall a plugin provided by the command line property (-P) plugin
+       -  ~$ gradlew gaelykListInstalledPlugins: to show the installed plugins
+       -  ~$ gradlew gaelykCreateController<ControllerName>: to create a Groovlet with the specified name
+       -  ~$ gradlew gaelykCreateView<ViewName>: to create a Groovy template with the specified name
+       -  ~$ gradlew cleanEclipse eclipse: to generate Eclipse project files
+       -  ~$ gradlew cleanIdea idea: to generate IntelliJ project files
 
  - Directory layout
             /
