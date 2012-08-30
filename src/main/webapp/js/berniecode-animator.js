@@ -1,4 +1,4 @@
-﻿/** @license
+/** @license
 	Animator.js 1.1.9
 	
 	This library is released under the BSD license:
@@ -111,7 +111,7 @@ Animator.prototype = {
 		} else {
 			this.state += movement;
 		}
-		
+
 		try {
 			this.propagate();
 		} finally {
@@ -155,11 +155,11 @@ Animator.makeArray = function(o) {
 Animator.camelize = function(string) {
 	var oStringList = string.split('-');
 	if (oStringList.length == 1) return oStringList[0];
-	
+
 	var camelizedString = string.indexOf('-') == 0
 		? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
 		: oStringList[0];
-	
+
 	for (var i = 1, len = oStringList.length; i < len; i++) {
 		var s = oStringList[i];
 		camelizedString += s.charAt(0).toUpperCase() + s.substring(1);
@@ -408,7 +408,7 @@ function CSSStyleSubject(els, style1, style2) {
 			if (window.DEBUG) alert("No to style provided for '" + prop + '"');
 			continue;
 		}
-		
+
 		if (from = ColorStyleSubject.parseColor(fromProp)) {
 			to = ColorStyleSubject.parseColor(toProp);
 			type = ColorStyleSubject;
@@ -472,7 +472,7 @@ CSSStyleSubject.prototype = {
 			el.className = oldClass;
 		}
 		return rtn;
-		
+
 	},
 	setState: function(state) {
 		for (var i=0; i<this.subjects.length; i++) {

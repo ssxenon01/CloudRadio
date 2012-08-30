@@ -26,6 +26,7 @@ var threeSixtyPlayer, // instance
 function ThreeSixtyPlayer() {
 
   var self = this,
+      cliend_id = '9852543170df60b358d27d2a547daa94',
       pl = this,
       sm = soundManager, // soundManager instance
       uA = navigator.userAgent,
@@ -41,6 +42,7 @@ function ThreeSixtyPlayer() {
 
   // CSS class for ignoring MP3 links
   this.excludeClass = 'threesixty-exclude';
+  
   this.links = [];
   this.sounds = [];
   this.soundsByURL = [];
@@ -55,42 +57,46 @@ function ThreeSixtyPlayer() {
   this.peakDataHistory = [];
  
   // 360player configuration options
-  this.config = {
+  this.config = { 
+    allowMultiple: false,
+    loadRingColor: '#ccc',
+    playRingColor: '#000',
+    backgroundRingColor: '#eee',
+    circleDiameter: 232,
+    circleRadius: 116,
+    animDuration: 500, 
+    showHMSTime: true,
 
+    useWaveformData: true,
+    waveformDataColor: '#0099ff',
+    waveformDataDownsample: 2,
+    waveformDataOutside: false,
+    waveformDataConstrain: false,
+    waveformDataLineRatio: 0.34,
+
+    useEQData: true, 
+    eqDataDownsample: 1,
+    eqDataOutside: true,
+    eqDataLineRatio: 0.899, 
     playNext: false,   // stop after one sound, or play through list until end
-    autoPlay: false,   // start playing the first sound right away
-    allowMultiple: false,  // let many sounds play at once (false = only one sound playing at a time)
-    loadRingColor: '#ccc', // how much has loaded
-    playRingColor: '#000', // how much has played
-    backgroundRingColor: '#eee', // color shown underneath load + play ("not yet loaded" color)
+    autoPlay: false,   // start playing the first sound right away 
 
     // optional segment/annotation (metadata) stuff..
     segmentRingColor: 'rgba(255,255,255,0.33)', // metadata/annotation (segment) colors
     segmentRingColorAlt: 'rgba(0,0,0,0.1)',
     loadRingColorMetadata: '#ddd', // "annotations" load color
-    playRingColorMetadata: 'rgba(128,192,256,0.9)', // how much has played when metadata is present
-
-    circleDiameter: null, // set dynamically according to values from CSS
-    circleRadius: null,
+    playRingColorMetadata: 'rgba(128,192,256,0.9)', // how much has played when metadata is present 
     animDuration: 500,
     animTransition: window.Animator.tx.bouncy, // http://www.berniecode.com/writing/animator.html
     showHMSTime: true, // hours:minutes:seconds vs. seconds-only
     scaleFont: true,  // also set the font size (if possible) while animating the circle
 
-    // optional: spectrum or EQ graph in canvas (not supported in IE <9, too slow via ExCanvas)
-    useWaveformData: false,
-    waveformDataColor: '#0099ff',
-    waveformDataDownsample: 3, // use only one in X (of a set of 256 values) - 1 means all 256
+    // optional: spectrum or EQ graph in canvas (not supported in IE <9, too slow via ExCanvas) 
+    waveformDataColor: '#0099ff', 
     waveformDataOutside: false,
-    waveformDataConstrain: false, // if true, +ve values only - keep within inside circle
-    waveformDataLineRatio: 0.64,
-
-    // "spectrum frequency" option
-    useEQData: false,
-    eqDataColor: '#339933',
-    eqDataDownsample: 4, // use only one in X (of 256 values)
-    eqDataOutside: true,
-    eqDataLineRatio: 0.54,
+    waveformDataConstrain: false, // if true, +ve values only - keep within inside circle 
+    eqDataColor: '#339933', 
+    eqDataOutside: true, 
 
     // enable "amplifier" (canvas pulses like a speaker) effect
     usePeakData: true,
@@ -421,25 +427,12 @@ function ThreeSixtyPlayer() {
     soundURL = (o.href);
     thisSound = self.getSoundByURL(soundURL);
 
-    if (thisSound) {
-
-      // already exists
-      if (thisSound === self.lastSound) {
-        // and was playing (or paused)
-        thisSound.togglePause();
-      } else {
-        // different sound
-        thisSound.togglePause(); // start playing current
-        sm._writeDebug('sound different than last sound: '+self.lastSound.sID);
-        if (!self.config.allowMultiple && self.lastSound) {
-          self.stopSound(self.lastSound);
-        }
-      }
-
+    if (self.lastSound) {  
+        self.lastSound.togglePause();
+        thisSound = self.lastSound;
     } else {
 
-      // append some dom shiz, make noise
-
+      // append some dom shiz, make noise 
       oContainer = o.parentNode;
       has_vis = (self.getElementsByClassName('ui360-vis','div',oContainer.parentNode).length);
 
@@ -562,7 +555,7 @@ function ThreeSixtyPlayer() {
        return false;
      }
      thisSound._360data.animating = 0;
-     soundManager._writeDebug('fanOut: '+thisSound.sID+': '+thisSound._360data.oLink.href);
+     //soundManager._writeDebug('fanOut: '+thisSound.sID+': '+thisSound._360data.oLink.href);
      thisSound._360data.oAnim.seekTo(1); // play to end
      window.setTimeout(function() {
        // oncomplete hack
@@ -578,7 +571,6 @@ function ThreeSixtyPlayer() {
        return false;
      }
      thisSound._360data.animating = -1;
-     soundManager._writeDebug('fanIn: '+thisSound.sID+': '+thisSound._360data.oLink.href);
      // massive hack
      thisSound._360data.oAnim.seekTo(0); // play to end
      window.setTimeout(function() {
@@ -603,7 +595,10 @@ function ThreeSixtyPlayer() {
   };
 
   this.stopSound = function(oSound) {
-
+    console.log(self.lastSound);
+    if(!oSound){
+      oSound = self.lastSound;
+    }
     soundManager._writeDebug('stopSound: '+oSound.sID);
     soundManager.stop(oSound.sID);
     if (!isTouchDevice) { // iOS 4.2+ security blocks onfinish() -> playNext() if we set a .src in-between(?)
@@ -611,10 +606,117 @@ function ThreeSixtyPlayer() {
     }
 
   };
+  this.playSound = function(data){ 
+    if(self.lastSound){
+        soundManager.stop(self.lastSound.sID);
+      if (!isTouchDevice) { // iOS 4.2+ security blocks onfinish() -> playNext() if we set a .src in-between(?)
+        soundManager.unload(oSound.sID);
+      }   
+    }
+     
+    oContainer = document.getElementById('ui360player');
+    has_vis = (self.getElementsByClassName('ui360-vis','div',oContainer.parentNode).length);
 
-  this.buttonClick = function(e) {
+      // create sound
 
-    var o = e?(e.target?e.target:e.srcElement):window.event.srcElement;
+    thisSound = sm.createSound({
+      id: 'track_' + data.id,
+      url: data.stream_url+'?client_id='+cliend_id,
+      onplay:self.events.play,
+      onstop:self.events.stop,
+      onpause:self.events.pause,
+      onresume:self.events.resume,
+      onfinish:self.events.finish,
+      onbufferchange:self.events.bufferchange,
+      whileloading:self.events.whileloading,
+      whileplaying:self.events.whileplaying,
+      useWaveformData:(has_vis && self.config.useWaveformData),
+      useEQData:(has_vis && self.config.useEQData),
+      usePeakData:(has_vis && self.config.usePeakData)
+    });  
+    diameter = parseInt(self.getElementsByClassName('sm2-360ui','div',oContainer)[0].offsetWidth, 10);
+
+    thisSound._360data = {
+      oUI360: oContainer, // the (whole) entire container 
+      className: self.css.sPlaying,
+      oUIBox: self.getElementsByClassName('sm2-360ui','div',oContainer)[0],
+      oCanvas: self.getElementsByClassName('sm2-canvas','canvas',oContainer)[0],
+      oButton: self.getElementsByClassName('sm2-360btn','span',oContainer)[0],
+      oTiming: self.getElementsByClassName('sm2-timing','div',oContainer)[0],
+      oCover: self.getElementsByClassName('sm2-cover','div',oContainer)[0],
+      circleDiameter: diameter,
+      circleRadius: diameter/2,
+      lastTime: null,
+      didFinish: null,
+      pauseCount:0,
+      radius:0,
+      fontSize: 1,
+      fontSizeMax: self.config.fontSizeMax,
+      scaleFont: (has_vis && self.config.scaleFont),
+      showHMSTime: has_vis,
+      amplifier: (has_vis && self.config.usePeakData?0.9:1), // TODO: x1 if not being used, else use dynamic "how much to amplify by" value
+      radiusMax: diameter*0.175, // circle radius
+      width:0,
+      widthMax: diameter*0.4, // width of the outer ring
+      lastValues: {
+        bytesLoaded: 0,
+        bytesTotal: 0,
+        position: 0,
+        durationEstimate: 0
+      }, // used to track "last good known" values before sound finish/reset for anim
+      animating: false,
+      oAnim: new window.Animator({
+        duration: self.config.animDuration,
+        transition:self.config.animTransition,
+        onComplete: function() {
+          // var thisSound = this;
+          // thisSound._360data.didFinish = false; // reset full circle
+        }
+      }),
+      oAnimProgress: function(nProgress) {
+        var thisSound = this;
+        thisSound._360data.radius = parseInt(thisSound._360data.radiusMax*thisSound._360data.amplifier*nProgress, 10);
+        thisSound._360data.width = parseInt(thisSound._360data.widthMax*thisSound._360data.amplifier*nProgress, 10);
+        if (thisSound._360data.scaleFont && thisSound._360data.fontSizeMax !== null) {
+          thisSound._360data.oTiming.style.fontSize = parseInt(Math.max(1,thisSound._360data.fontSizeMax*nProgress), 10)+'px';
+          thisSound._360data.oTiming.style.opacity = nProgress;
+        }
+        if (thisSound.paused || thisSound.playState === 0 || thisSound._360data.lastValues.bytesLoaded === 0 || thisSound._360data.lastValues.position === 0) {
+          self.updatePlaying.apply(thisSound);
+        }
+      },
+      fps: 0
+    };
+
+    // "Metadata" (annotations)
+    if (typeof self.Metadata !== 'undefined' && self.getElementsByClassName('metadata','div',thisSound._360data.oUI360).length) {
+      thisSound._360data.metadata = new self.Metadata(thisSound,self);
+    }
+
+    // minimize ze font
+    if (thisSound._360data.scaleFont && thisSound._360data.fontSizeMax !== null) {
+      thisSound._360data.oTiming.style.fontSize = '1px';
+    }
+
+    // set up ze animation
+    thisSound._360data.oAnim.addSubject(thisSound._360data.oAnimProgress,thisSound);
+
+    // animate the radius out nice
+    self.refreshCoords(thisSound);
+
+    self.updatePlaying.apply(thisSound);
+
+    self.soundsByURL[data.stream_url] = thisSound;
+    self.sounds.push(thisSound);
+    if (!self.config.allowMultiple && self.lastSound) {
+      self.stopSound(self.lastSound);
+    }
+    thisSound.play();
+    self.lastSound = thisSound;  
+    console.log(self.lastSound);
+  };
+  this.buttonClick = function(e) { 
+    var o = e?(e.target?e.target:e.srcElement):window.event.srcElement; 
     self.handleClick({target:self.getParentByClassName(o,'sm2-360ui').nextSibling}); // link next to the nodes we inserted
     return false;
 
