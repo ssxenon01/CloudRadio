@@ -42,7 +42,12 @@ function ThreeSixtyPlayer() {
 
   // CSS class for ignoring MP3 links
   this.excludeClass = 'threesixty-exclude';
-  
+  soundManager.url = '/swf/';
+  soundManager.flashVersion = 9;
+  soundManager.useFlashBlock = false;
+  soundManager.useHighPerformance = true;
+  soundManager.wmode = 'transparent';
+  soundManager.useFastPolling = true;
   this.links = [];
   this.sounds = [];
   this.soundsByURL = [];
@@ -587,11 +592,12 @@ function ThreeSixtyPlayer() {
   };
 
   this.refreshCoords = function(thisSound) {
-
-    thisSound._360data.canvasXY = self.findXY(thisSound._360data.oCanvas);
-    thisSound._360data.canvasMid = [thisSound._360data.circleRadius,thisSound._360data.circleRadius];
-    thisSound._360data.canvasMidXY = [thisSound._360data.canvasXY[0]+thisSound._360data.canvasMid[0], thisSound._360data.canvasXY[1]+thisSound._360data.canvasMid[1]];
-
+    if(thisSound){
+      thisSound._360data.canvasXY = self.findXY(thisSound._360data.oCanvas);
+      thisSound._360data.canvasMid = [thisSound._360data.circleRadius,thisSound._360data.circleRadius];
+      thisSound._360data.canvasMidXY = [thisSound._360data.canvasXY[0]+thisSound._360data.canvasMid[0], thisSound._360data.canvasXY[1]+thisSound._360data.canvasMid[1]];
+    }
+    
   };
 
   this.stopSound = function(oSound) {
@@ -712,8 +718,7 @@ function ThreeSixtyPlayer() {
       self.stopSound(self.lastSound);
     }
     thisSound.play();
-    self.lastSound = thisSound;  
-    console.log(self.lastSound);
+    self.lastSound = thisSound;
   };
   this.buttonClick = function(e) { 
     var o = e?(e.target?e.target:e.srcElement):window.event.srcElement; 
@@ -762,9 +767,11 @@ function ThreeSixtyPlayer() {
     // just in case, update coordinates (maybe the element moved since last time.)
     self.lastTouchedSound = thisSound;
     self.refreshCoords(thisSound);
-    oData = thisSound._360data;
-    self.addClass(oData.oUIBox,'sm2_dragging');
-    oData.pauseCount = (self.lastTouchedSound.paused?1:0);
+    if(thisSound){
+        oData = thisSound._360data;
+        self.addClass(oData.oUIBox,'sm2_dragging');
+        oData.pauseCount = (self.lastTouchedSound.paused?1:0);
+    }
     // self.lastSound.pause();
     self.mmh(e?e:window.event);
 
@@ -784,12 +791,14 @@ function ThreeSixtyPlayer() {
   };
 
   this.mouseUp = function(e) {
-
-    var oData = self.lastTouchedSound._360data;
-    self.removeClass(oData.oUIBox,'sm2_dragging');
-    if (oData.pauseCount === 0) {
-      self.lastTouchedSound.resume();
+    if(self.lastTouchedSound){
+        var oData = self.lastTouchedSound._360data;
+        self.removeClass(oData.oUIBox,'sm2_dragging');
+        if (oData.pauseCount === 0) {
+          self.lastTouchedSound.resume();
+        }
     }
+    
     if (!isTouchDevice) {
       document.onmousemove = null;
       document.onmouseup = null;
@@ -805,7 +814,8 @@ function ThreeSixtyPlayer() {
     if (typeof e === 'undefined') {
       e = window.event;
     }
-    var oSound = self.lastTouchedSound,
+    if(self.lastTouchedSound){
+      var oSound = self.lastTouchedSound,
         coords = self.getMouseXY(e),
         x = coords[0],
         y = coords[1],
@@ -813,7 +823,9 @@ function ThreeSixtyPlayer() {
         deltaY = y-oSound._360data.canvasMidXY[1],
         angle = Math.floor(fullCircle-(self.rad2deg(Math.atan2(deltaX,deltaY))+180));
 
-    oSound.setPosition(oSound.durationEstimate*(angle/fullCircle));
+        oSound.setPosition(oSound.durationEstimate*(angle/fullCircle)); 
+    }
+    
     self.stopEvent(e);
     return false;
 

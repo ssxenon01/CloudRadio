@@ -10,9 +10,12 @@ import mn.xenon.domain.User
 class Music {
 	@Key Long id
 	String title
-	String author 
+	String artist 
 	Date created = new Date()
 	String genre
-	String stream
+	String streamUrl
+	String album
 	String imageUrl
+	String description
+	@Unindexed String lyrics
 }

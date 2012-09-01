@@ -15,8 +15,7 @@
          <div class="clear"></div>
       </div>
       <script src="scripts/prettyphoto.js"></script>
-      <script src="scripts/backstretch.js"></script>
-      <script src="scripts/audio.js"></script>
+      <script src="scripts/backstretch.js"></script> 
       <script src="scripts/slides.js"></script>
       <script src="scripts/custom.js"></script>
       <script>

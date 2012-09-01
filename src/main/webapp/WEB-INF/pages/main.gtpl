@@ -41,9 +41,9 @@
                   <div class="widgetcontent">
                      <div id="respond"> 
                      <form action="/test" method="post" id="commentform">
-                        <p><input type="file" id="file-chooser" name="title" tabindex="1" aria-required="true" /></p>
+                        <p id="flashContent"> Flash 9+ requered </p>
                         <p>or enter url</p>
-                        <p><input type="text"  name="title" tabindex="1" aria-required="true" /></p>
+                        <p><input type="text"  name="streamUrl" tabindex="1" aria-required="true" /></p>
                         <p>Title</p>
                         <p><input type="text" name="title" size="22" tabindex="2" aria-required="true" /></p>
                         <p>Artist</p>
@@ -51,9 +51,11 @@
                         <p>Genre</p>
                         <p><input type="text" name="genre" size="22" tabindex="4" /></p> 
                         <p>Album</p>
-                        <p><input type="text" name="genre"  size="22" tabindex="5" /></p>
+                        <p><input type="text" name="album"  size="22" tabindex="5" /></p>
                         <p>Lyrics</p>
-                        <p><textarea name="genre" id="url" value="" size="22" tabindex="6" cols="100%" rows="10"></textarea></p>
+                        <p><textarea name="description"  value="" size="22" tabindex="6" cols="100%" rows="10"></textarea></p>
+                        <button style="float:right;">Submit</button>
+                        <div class="clear"><div>
                      </form>
                   </div>
                   </div>
@@ -151,10 +153,10 @@
                soundManager.useFastPolling = true;  
                SC.initialize({
                   client_id: '9852543170df60b358d27d2a547daa94',
-                  redirect_uri: 'http://localhost:8080/main'
+                  redirect_uri: 'http://cloudmongolia.appspot.com'
                });
                soundManager.onready(function() { 
-                  fetchMusic("${request.stream}"); 
+                  fetchMusic("${request.streamUrl?:'http://soundcloud.com/merie-ksaier/bedshaped'}"); 
                 });
             </script>
 <% include '/WEB-INF/includes/_footer.gtpl' %>

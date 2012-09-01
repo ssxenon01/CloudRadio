@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="mn">
    <head>
       	<meta charset="utf-8" />
@@ -11,6 +12,7 @@
 		    <script type="text/javascript" src="/js/soundmanager2.js"></script>
 			<script type="text/javascript" src="/js/360player.js"></script>
 			<script src="http://connect.soundcloud.com/sdk.js"></script>
+			
 	      	<style>
 		    	/* BACKGROUND COLORS */
 		      	#dropmenu li.current-menu-item > a,

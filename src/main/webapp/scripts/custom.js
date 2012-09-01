@@ -139,11 +139,13 @@ jQuery(document).ready(function(){
 jQuery(window).resize(function(){
 	docHeight();
 });
-function fetchMusic(url){ 
+function fetchMusic(url){
 	var client_id = "9852543170df60b358d27d2a547daa94";
     jQuery.getJSON('http://api.soundcloud.com/resolve.json?url=' + url + '&client_id=' + client_id + '&callback=?', function(track){
-        threeSixtyPlayer.playSound(track); 
-        slidePage('/content/30',true);
+        if(threeSixtyPlayer.lastSound){
+        	slidePage('/content/30',true);	
+        }
+        threeSixtyPlayer.playSound(track);
     });
 }
 jQuery('#file-chooser').change(function(a){
@@ -182,3 +184,25 @@ jQuery("ol.songs li a").live('click',function(a) {
 	// slidePage(url,next);
 	return false;
 });
+function getLocation()
+{
+	return window.location.href;
+}
+
+var params = {
+	flashvars: window.location.search.substring(1),
+ 	menu: "false"
+};
+var attributes = {
+  id: "flashContent",
+  name: "flashContent"
+};
+jQuery('#commentform').live('submit',function(){
+	var query = jQuery('#commentform').serialize();
+	jQuery.post('/upload',query, function(data) {
+	  jQuery('#commentform').reset();
+	}); 
+
+	return false;
+}); 
+swfobject.embedSWF("/swf/mCloud.swf", "flashContent", "190", "30", "9.0.0","/swf/expressInstall.swf", null, params, attributes);

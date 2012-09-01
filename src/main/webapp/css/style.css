@@ -301,7 +301,8 @@ textarea {line-height: 16px; padding: 15px; width:90%; font-family: sans-serif; 
 input[type="submit"] {cursor: pointer; overflow: hidden; display: block; border: none; padding: 5px 15px; margin-bottom: 1px;}
 #commentform input[type="submit"]:hover, 
 input[type="submit"]:hover {background: #333; color: #fff;}
-
+#commentform button  { background-color:#8DADD1;cursor: pointer; overflow: hidden; display: block; border: none; padding: 5px 15px; margin:13px;margin-bottom: 1px;}
+#commentform button:hover {background: #333; color: #fff;}
 .entry form input[type="text"],
 .entry form input[type="password"],
 .entry form textarea {background: #151515;}
